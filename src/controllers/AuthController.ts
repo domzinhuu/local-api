@@ -30,8 +30,19 @@ class AuthController {
       return;
     }
 
+    const profiles = [
+      { profile: 'financeiro', jurisdictions: ['all_access'] },
+      { profile: 'administrativo', jurisdictions: ['all_access'] }
+    ];
+
+    const profies = user.email.includes('admin')
+      ? [{ profile: 'administrativo', jurisdictions: ['all_access'] }]
+      : user.email.includes('maique')
+      ? [{ profile: 'financeiro', jurisdictions: ['all_access'] }]
+      : profiles;
+
     const token = jwt.sign(
-      { id: user.id, name: user.name, username: user.username, email: user.email, role: user.role },
+      { id: user.id, name: user.name, username: user.username, email: user.email, role: user.role, profiles: profies },
       config.jwtSecret,
       {
         expiresIn: '1h'

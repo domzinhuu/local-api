@@ -1,0 +1,13 @@
+version: '3'
+services:
+  fourward:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    container_name: fourward
+    ports:
+      - '8081:3000'
+      # - "443:443"
+    restart: always
