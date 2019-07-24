@@ -1,0 +1,13 @@
+version: '3'
+services:
+  default:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    container_name: default
+    ports:
+      - '8081:3000'
+      # - "443:443"
+    restart: always
