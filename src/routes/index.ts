@@ -4,6 +4,7 @@ import user from './user';
 import skipper from './skipper';
 import utils from './utils';
 import inversare from './inversare';
+import angulators from './angulators';
 
 const routes = Router();
 
@@ -12,5 +13,6 @@ routes.use('/api/v1', inversare);
 routes.use('/user', user);
 routes.use('/skipper/parameters/v1', skipper);
 routes.use('/utils', utils);
+routes.use('/angulators', angulators);
 
 export default routes;
