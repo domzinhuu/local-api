@@ -16,7 +16,7 @@ createConnection()
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use('/', routes);
-    const port = process.env.PORT || 8081;
+    const port = process.env.PORT || 3000;
 
     app.listen(port, () => {
       console.log('Express server has started on port ' + port + '.');

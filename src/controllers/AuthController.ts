@@ -21,7 +21,7 @@ class AuthController {
     try {
       user = await userRepository.findOneOrFail({ where: { username } });
     } catch (error) {
-      res.status(401).send({ code: 401, message: 'Login ou Password inválido' });
+      res.status(401).send({ code: 401, message: 'Usuário não cadastrado!' });
       return;
     }
 
