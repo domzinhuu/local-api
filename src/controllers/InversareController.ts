@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import * as _ from 'lodash';
 
 class InversareController {
   static loginInversare = async (req: Request, res: Response) => {
@@ -21,6 +22,29 @@ class InversareController {
     setTimeout(() => {
       return res.status(200).send({});
     }, 1000);
+  };
+
+  static getBrandTransactions = async (req: Request, res: Response) => {
+    const masterTransactions = masterDb;
+    const { page, size } = req.query;
+    const startFrom = parseInt(page) * parseInt(size);
+    let filtered = [];
+    const isPaging = page && size;
+
+    filtered = _.orderBy(masterTransactions, ['processingDate'], ['asc']);
+
+    const result = {
+      content: isPaging ? filtered.slice(startFrom, startFrom + size) : masterTransactions,
+      pageNumber: page,
+      pageSize: size,
+      totalElements: filtered.length,
+      totalPages: Math.ceil(filtered.length / size)
+    };
+
+    if (filtered.length === 0) {
+      return res.status(403).send({ error: 'Nenhuma transação encontrada' });
+    }
+    return res.status(200).send(result);
   };
 }
 
@@ -326,7 +350,8 @@ const queueSend = [
       id: 11,
       type: 'Standard',
       brandClaimId: '200002020654',
-      clearingTransactionId: 'ccCnaMDqmto4wnL+BSUKSdzROqGJ7YELoKhEvluycwKNg3XTz/faIJhFDkl9hW081B5tTqFFiAwCpcocPdB2My4t7DtSTk63VXDl1CySA8Y',
+      clearingTransactionId:
+        'ccCnaMDqmto4wnL+BSUKSdzROqGJ7YELoKhEvluycwKNg3XTz/faIJhFDkl9hW081B5tTqFFiAwCpcocPdB2My4t7DtSTk63VXDl1CySA8Y',
       saved: '2019-05-28 15:50:43'
     },
     documentIndicator: true,
@@ -402,3 +427,180 @@ const queueReceived = {
     }
   ]
 };
+
+const masterDb = [
+  {
+    merchant: {
+      code: null,
+      legalName: null,
+      socialName: 'TEST MERCHANT NAME',
+      category: null,
+      document: {},
+      address: {
+        street: null,
+        number: null,
+        complement: null,
+        neighborhood: null,
+        city: null,
+        state: null,
+        country: null,
+        zipCode: null
+      },
+      acquirer: {
+        code: null,
+        document: null,
+        name: null,
+        status: null,
+        createdAt: null,
+        responsibles: []
+      },
+      economicGroup: {
+        document: null,
+        economicGroup: null,
+        name: null,
+        status: null,
+        acquirer: null
+      },
+      paymentFacilitator: {
+        code: null,
+        document: null,
+        name: null,
+        createdAt: null,
+        responsibles: [],
+        status: null
+      },
+      salesChannel: {
+        code: null,
+        name: null,
+        description: null
+      },
+      responsibles: [],
+      cnaes: [],
+      terminals: [],
+      status: null,
+      createdAt: null
+    },
+    processingDate: 1545263573257,
+    transactionId: 'U7dImb1ncs24LKNU9dDpl+FHlPzyfYOOv/5PijTlO6wHH09l7aiVJ1KJHp3sWPUHH0l90J1U82DGrE3hq72A',
+    acquirerReferenceNumber: '05413364365000000000667',
+    originValue: '2500',
+    originCurrency: 'USD',
+    cardSequenceNumber: '5488888888887192'
+  },
+  {
+    merchant: {
+      code: null,
+      legalName: null,
+      socialName: 'CAR RENT BY MONTH',
+      category: null,
+      document: {},
+      address: {
+        street: null,
+        number: null,
+        complement: null,
+        neighborhood: null,
+        city: null,
+        state: null,
+        country: null,
+        zipCode: null
+      },
+      acquirer: {
+        code: null,
+        document: null,
+        name: null,
+        status: null,
+        createdAt: null,
+        responsibles: []
+      },
+      economicGroup: {
+        document: null,
+        economicGroup: null,
+        name: null,
+        status: null,
+        acquirer: null
+      },
+      paymentFacilitator: {
+        code: null,
+        document: null,
+        name: null,
+        createdAt: null,
+        responsibles: [],
+        status: null
+      },
+      salesChannel: {
+        code: null,
+        name: null,
+        description: null
+      },
+      responsibles: [],
+      cnaes: [],
+      terminals: [],
+      status: null,
+      createdAt: null
+    },
+    processingDate: 1545263573257,
+    transactionId: 'U7dImb1ncs24LKNU9dDpl+FHlPzyfYOOv/5PijTlO6wHH09l7aiVJ1KJHp3sWPUHH0l90J1U82DGrE3hq72B',
+    acquirerReferenceNumber: '05413364365000000000667',
+    originValue: '7500',
+    originCurrency: 'USD',
+    cardSequenceNumber: '5488888888887192'
+  },
+  {
+    merchant: {
+      code: null,
+      legalName: null,
+      socialName: 'MORE MASTER TRANSACTION',
+      category: null,
+      document: {},
+      address: {
+        street: null,
+        number: null,
+        complement: null,
+        neighborhood: null,
+        city: null,
+        state: null,
+        country: null,
+        zipCode: null
+      },
+      acquirer: {
+        code: null,
+        document: null,
+        name: null,
+        status: null,
+        createdAt: null,
+        responsibles: []
+      },
+      economicGroup: {
+        document: null,
+        economicGroup: null,
+        name: null,
+        status: null,
+        acquirer: null
+      },
+      paymentFacilitator: {
+        code: null,
+        document: null,
+        name: null,
+        createdAt: null,
+        responsibles: [],
+        status: null
+      },
+      salesChannel: {
+        code: null,
+        name: null,
+        description: null
+      },
+      responsibles: [],
+      cnaes: [],
+      terminals: [],
+      status: null,
+      createdAt: null
+    },
+    processingDate: 1545263573257,
+    transactionId: 'U7dImb1ncs24LKNU9dDpl+FHlPzyfYOOv/5PijTlO6wHH09l7aiVJ1KJHp3sWPUHH0l90J1U82DGrE3hq72C',
+    acquirerReferenceNumber: '05413364365000000000667',
+    originValue: '3400',
+    originCurrency: 'USD',
+    cardSequenceNumber: '5488888888887192'
+  }
+];
